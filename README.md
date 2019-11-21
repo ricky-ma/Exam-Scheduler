@@ -1,1 +1,1 @@
-# exam-scheduler
+# UBC Exam Scheduler
