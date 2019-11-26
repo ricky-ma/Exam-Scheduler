@@ -1,7 +1,8 @@
 % Database of Courses
 % only Winter 2019 Term 1 courses w/ final exams listed
 % no work-term placements, research seminars, directed studies, thesis
-:- discontiguous prop/3.
+
+% :- discontiguous prop/3.
 
 course(cs100).
 course(cs103).
@@ -34,6 +35,14 @@ course(cs424).
 course(cs425).
 course(cs427).
 course(cs430).
+
+room(dmp100).
+room(dmp310).
+room(dmp111).
+room(srcA).
+room(srcB).
+room(srcC).
+
 prop(cs100, enrolled, 290).
 prop(cs103, enrolled, 459).
 prop(cs110, enrolled, 774).
@@ -66,21 +75,21 @@ prop(cs424, enrolled, 69).
 prop(cs427, enrolled, 74).
 prop(cs430, enrolled, 117).
 
-room(dmp100).
-room(dmp310).
-room(dmp111).
-room(srcA).
-room(srcB).
-room(srcC).
-
 prop(dmp100, capacity, 800).
 prop(dmp100, day, [1,2,3,4,5,6,7,8,9,10,13,15,18]).
 prop(dmp100, time, [0830,1200,1530,1900]).
 
+% below are just mock data for testing
 prop(dmp310, capacity, 160).
 prop(dmp310, day, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
 prop(dmp310, time, [0830,1200,1530]).
 
-% prop(day, valid, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
+prop(dmp111, capacity, 200).
+prop(dmp310, day, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
+prop(dmp310, time, [0830,1200,1530]).
 
-prop(_,has_exam_in,_).
+prop(srcA, capacity, 300).
+prop(srcA, day, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
+prop(srcA, time, [0830,1200,1530]).
+
+% prop(day, valid, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
