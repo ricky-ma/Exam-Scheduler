@@ -76,20 +76,166 @@ prop(cs427, enrolled, 74).
 prop(cs430, enrolled, 117).
 
 prop(dmp100, capacity, 800).
-prop(dmp100, day, [1,2,3,4,5,6,7,8,9,10,13,15,18]).
-prop(dmp100, time, [0830,1200,1530,1900]).
-
-% below are just mock data for testing
 prop(dmp310, capacity, 160).
-prop(dmp310, day, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
-prop(dmp310, time, [0830,1200,1530]).
-
 prop(dmp111, capacity, 200).
-prop(dmp310, day, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
-prop(dmp310, time, [0830,1200,1530]).
-
 prop(srcA, capacity, 300).
-prop(srcA, day, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
-prop(srcA, time, [0830,1200,1530]).
+
+% avail(Room, Day, Times) is true if Room is available at Times on Day
+/*
+avail(dmp100, [[1, [0830, 1200, 1530, 1900]],
+               [2, [0830, 1200, 1530, 1900]],
+               [3, [0830, 1200, 1530, 1900]],
+               [4, [0830, 1200, 1530, 1900]],
+               [5, [0830, 1200, 1530, 1900]]]).
+*/
+avail(dmp100, [[1, [0830, 1200, 1530, 1900]]]).
+
+avail(dmp310, [[1, [0830, 1200, 1530, 1900]],
+               [2, [0830, 1200, 1530, 1900]],
+               [3, [0830, 1200, 1530, 1900]],
+               [4, [0830, 1200, 1530, 1900]],
+               [5, [0830, 1200, 1530, 1900]]]).
+
+avail(dmp111, [[1, [0830, 1200, 1530, 1900]],
+               [2, [0830, 1200, 1530, 1900]],
+               [3, [0830, 1200, 1530, 1900]],
+               [4, [0830, 1200, 1530, 1900]],
+               [5, [0830, 1200, 1530, 1900]]]).
+
+avail(srcA, [[1, [0830, 1200, 1530, 1900]],
+               [2, [0830, 1200, 1530, 1900]],
+               [3, [0830, 1200, 1530, 1900]],
+               [4, [0830, 1200, 1530, 1900]],
+               [5, [0830, 1200, 1530, 1900]]]).
+
+time(0830).
+time(1200).
+time(1530).
+time(1900).
+
+day(X) :- X =< 18.
+
+/*
+% avail_day_time(Room, Day, Time) is true if there is Room is availale during Time on Day.
+avail_day_time(dmp100, 1, 0830).
+avail_day_time(dmp100, 1, 1200).
+avail_day_time(dmp100, 1, 1530).
+avail_day_time(dmp100, 1, 1900).
+
+avail_day_time(dmp100, 2, 0830).
+avail_day_time(dmp100, 2, 1200).
+avail_day_time(dmp100, 2, 1530).
+avail_day_time(dmp100, 2, 1900).
+
+avail_day_time(dmp100, 3, 0830).
+avail_day_time(dmp100, 3, 1200).
+avail_day_time(dmp100, 3, 1530).
+avail_day_time(dmp100, 3, 1900).
+
+avail_day_time(dmp100, 4, 0830).
+avail_day_time(dmp100, 4, 1200).
+avail_day_time(dmp100, 4, 1530).
+avail_day_time(dmp100, 4, 1900).
+
+avail_day_time(dmp100, 5, 0830).
+avail_day_time(dmp100, 5, 1200).
+avail_day_time(dmp100, 5, 1530).
+avail_day_time(dmp100, 5, 1900).
+
+avail_day_time(dmp100, 6, 0830).
+avail_day_time(dmp100, 6, 1200).
+avail_day_time(dmp100, 6, 1530).
+avail_day_time(dmp100, 6, 1900).
+
+% below is an example input of room_day_time
+% an array of [Room, Day, Time]
+% for Room is availale during Time on Day.
+[
+    [dmp100, 1, 0830],
+    [dmp100, 1, 1200},
+    [dmp100, 1, 1530],
+    [dmp100, 1, 1900],
+    [dmp100, 2, 0830],
+    [dmp100, 2, 1200},
+    [dmp100, 2, 1530],
+    [dmp100, 2, 1900],
+    [dmp100, 3, 0830],
+    [dmp100, 3, 1200},
+    [dmp100, 3, 1530],
+    [dmp100, 3, 1900],
+    [dmp100, 4, 0830],
+    [dmp100, 4, 1200},
+    [dmp100, 4, 1530],
+    [dmp100, 4, 1900],
+    [dmp100, 5, 0830],
+    [dmp100, 5, 1200},
+    [dmp100, 5, 1530],
+    [dmp100, 5, 1900],
+    
+    [dmp111, 1, 0830],
+    [dmp111, 1, 1200},
+    [dmp111, 1, 1530],
+    [dmp111, 1, 1900],
+    [dmp111, 2, 0830],
+    [dmp111, 2, 1200},
+    [dmp111, 2, 1530],
+    [dmp111, 2, 1900],
+    [dmp111, 3, 0830],
+    [dmp111, 3, 1200},
+    [dmp111, 3, 1530],
+    [dmp111, 3, 1900],
+    [dmp111, 4, 0830],
+    [dmp111, 4, 1200},
+    [dmp111, 4, 1530],
+    [dmp111, 4, 1900],
+    [dmp111, 5, 0830],
+    [dmp111, 5, 1200},
+    [dmp111, 5, 1530],
+    [dmp111, 5, 1900],
+    
+    [dmp310, 1, 0830],
+    [dmp310, 1, 1200},
+    [dmp310, 1, 1530],
+    [dmp310, 1, 1900],
+    [dmp310, 2, 0830],
+    [dmp310, 2, 1200},
+    [dmp310, 2, 1530],
+    [dmp310, 2, 1900],
+    [dmp310, 3, 0830],
+    [dmp310, 3, 1200},
+    [dmp310, 3, 1530],
+    [dmp310, 3, 1900],
+    [dmp310, 4, 0830],
+    [dmp310, 4, 1200},
+    [dmp310, 4, 1530],
+    [dmp310, 4, 1900],
+    [dmp310, 5, 0830],
+    [dmp310, 5, 1200},
+    [dmp310, 5, 1530],
+    [dmp310, 5, 1900],
+
+    [srcA, 1, 0830],
+    [srcA, 1, 1200},
+    [srcA, 1, 1530],
+    [srcA, 1, 1900],
+    [srcA, 2, 0830],
+    [srcA, 2, 1200},
+    [srcA, 2, 1530],
+    [srcA, 2, 1900],
+    [srcA, 3, 0830],
+    [srcA, 3, 1200},
+    [srcA, 3, 1530],
+    [srcA, 3, 1900],
+    [srcA, 4, 0830],
+    [srcA, 4, 1200},
+    [srcA, 4, 1530],
+    [srcA, 4, 1900],
+    [srcA, 5, 0830],
+    [srcA, 5, 1200},
+    [srcA, 5, 1530],
+    [srcA, 5, 1900],
+]
+*/
+
 
 % prop(day, valid, [2,3,4,5,6,9,10,11,12,13,16,17,18]).

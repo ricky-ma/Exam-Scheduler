@@ -49,37 +49,49 @@ room_has_available_time(Room) :-
     length(TimeList, Len),
     Len > 0.
 
+myflatten([],[]).
+myflatten([List|Rest], FlatList) :-
+    append(List, FlatList0, FlatList),
+    myflatten(Rest, FlatList0).
+
+
+get_RDT([], []).
+get_RDT([Room | RT], [FresAllDays | RDTs]) :-
+    room(Room),
+    avail(Room, DTs),
+    get_RDT_all_days(Room, DTs, ResAllDays),
+    myflatten(ResAllDays, FresAllDays),
+    get_RDT(RT, RDTs).
+
+get_RDT_all_days(_, [], []).
+get_RDT_all_days(Room, [[Day, Times] | DTs], [Res1Day | ResAllDays]) :-
+    getRDT_one_day(Room, Day, Times, Res1Day),
+    get_RDT_all_days(Room, DTs, ResAllDays).
+
+getRDT_one_day(_, _, [], []).
+getRDT_one_day(Room, Day, [T | Times], [Res1Time | Res1Day]) :-
+    getRDT_one_time(Room, Day, T, Res1Time),
+    getRDT_one_day(Room, Day, Times, Res1Day).
+
+getRDT_one_time(Room, Day, Time, [Room, Day, Time]).
+
 schedule_courses_to_rooms([],_,[]).
-schedule_courses_to_rooms([Course | CT], Rooms, [Result | RT]) :-
-    course(Course),
-    schedule_course_into_room(Course, Rooms, Result),
-    schedule_courses_to_rooms(CT, Rooms, RT).
+schedule_courses_to_rooms([Course | CT], RDTs, [Result | RT]) :-
+    schedule_course_into_room(Course, RDTs, Result, NRDTs),
+    schedule_courses_to_rooms(CT, NRDTs, RT).
 
-% case that course fit in a room, and room is big enough + has time slot
-schedule_course_into_room(Course, [Room | _ ], Result) :-
+schedule_course_into_room(Course, [[Room, Day, Time] | RT], Result, RT) :-
     course_fit_in_room(Course, Room),
-    room_has_available_day(Room),
-    room_has_available_time(Room),
-    create_room_course_pair(Course, Room, Result).
+    create_room_course_pair(Course, Room, Day, Time, Result).
 
-% case that course fits in room and has available day, but no available time
-schedule_course_into_room(Course, [Room | RT], Result) :-
-    course_fit_in_room(Course, Room),
-    room_has_available_day(Room),
-    schedule_course_into_room(Course, RT, Result).
+schedule_course_into_room(Course, [RDT | RT], Result, [RDT | NRT]) :-
+    schedule_course_into_room(Course, RT, Result, NRT).
 
-% case that course fits in room, but has no available days
-schedule_course_into_room(Course, [Room | RT], Result) :-
-    course_fit_in_room(Course, Room),
-    schedule_course_into_room(Course, RT, Result).
-    
-% case that course doesnt fit in the room
-schedule_course_into_room(Course, [ _ | RT], Result) :-
-    schedule_course_into_room(Course, RT, Result).
-
-create_room_course_pair(Course, Room, prop(Course, has_exam_in, Room)).
+create_room_course_pair(Course, Room, Day, Time, scheduled(Course, Room, Day, Time)).
 
 schedule(Courses, Rooms, Result) :-
     sort_courses(Courses, Scourses),
     sort_rooms(Rooms, Srooms),
-    schedule_courses_to_rooms(Scourses, Srooms, Result).
+    get_RDT(Srooms, RDTs),
+    myflatten(RDTs, CleanRDTs),
+    schedule_courses_to_rooms(Scourses, CleanRDTs, Result).
