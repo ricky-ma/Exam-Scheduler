@@ -1,5 +1,5 @@
 :- use_module(library(clpfd)).
-:- consult(examscheduler).
+:- consult(database).
 
 getCourseInfo([],[]).
 getCourseInfo([Course|T], [prop(Course, enrolled, E)|RT]) :-
@@ -88,6 +88,12 @@ schedule_course_into_room(Course, [RDT | RT], Result, [RDT | NRT]) :-
     schedule_course_into_room(Course, RT, Result, NRT).
 
 create_room_course_pair(Course, Room, Day, Time, scheduled(Course, Room, Day, Time)).
+
+% TESTS
+% schedule([cs311, cs312, cs313, cs322, cs340, cs344, cs404, cs410, cs430], [dmp100], R).
+% schedule([cs210, cs213, cs221, cs302, cs304, cs310, cs311, cs312, cs313, cs322, cs340, cs344, cs404, cs410, cs430], [dmp100, dmp310, dmp111], R).
+% schedule([cs210, cs213, cs221, cs302, cs304, cs310, cs311, cs312, cs313, cs322, cs340, cs344, cs404, cs410, cs430], [dmp100, dmp310, dmp111, srcA], R).
+% schedule([cs100, cs103, cs110, cs121, cs203, cs210, cs213, cs221, cs302, cs304, cs310, cs311, cs312, cs313, cs314, cs317, cs319, cs320, cs322, cs340, cs344, cs404, cs410, cs415, cs420, cs421, cs422, cs424, cs425, cs427, cs430], [dmp100, dmp310, dmp111, srcA, srcB, srcC], R).
 
 schedule(Courses, Rooms, Result) :-
     sort_courses(Courses, Scourses),
