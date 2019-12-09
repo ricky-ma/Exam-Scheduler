@@ -132,7 +132,7 @@ schedule_max_room_use(Courses, Rooms, Result) :-
     get_RDT(Srooms, RDTs),
     schedule_courses_to_rooms(Scourses, RDTs, Result).
 
-schedule_no_conflicts(Courses, Rooms, Result) :-sch
+schedule_no_conflicts(Courses, Rooms, Result) :-
     sort_courses(Courses, Scourses),
     sort_rooms(Rooms, Srooms),
     get_RDT(Srooms, RDTs),
