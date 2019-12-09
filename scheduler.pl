@@ -75,9 +75,26 @@ getRDT_one_day(Room, Day, [T | Times], [Res1Time | Res1Day]) :-
 
 getRDT_one_time(Room, Day, Time, [Room, Day, Time]).
 
+student_conflict(Course, Course2) :-
+    student(S),
+    prop(S, takes, Course),
+    prop(S, takes, Course2).
+
+no_conflicts(_, []).
+no_conflicts(scheduled(Course, Room, Day, Time), [scheduled(_, _, _, Time2) | RS]) :-
+    dif(Time, Time2),
+    no_conflicts(scheduled(Course, Room, Day, Time), RS).
+no_conflicts(scheduled(Course, Room, Day, Time), [scheduled(_, _, Day2, _) | RS]) :-
+    dif(Day, Day2),
+    no_conflicts(scheduled(Course, Room, Day, Time), RS).
+no_conflicts(scheduled(Course, Room, Day, Time), [scheduled(Course2, _, Day, Time) | RS]) :-
+    \+ student_conflict(Course, Course2),
+    no_conflicts(scheduled(Course, Room, Day, Time), RS).
+
 schedule_courses_to_rooms([],_,[]).
 schedule_courses_to_rooms([Course | CT], RDTs, [Result | RT]) :-
     schedule_course_into_room(Course, RDTs, Result, NRDTs),
+    no_conflicts(Result, RT),
     schedule_courses_to_rooms(CT, NRDTs, RT).
 
 schedule_course_into_room(Course, [[Room, Day, Time] | RT], Result, RT) :-
