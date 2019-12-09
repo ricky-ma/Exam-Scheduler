@@ -182,7 +182,7 @@ avail_day_time(dmp100, 6, 1900).
     [dmp100, 5, 1200},
     [dmp100, 5, 1530],
     [dmp100, 5, 1900],
-    
+
     [dmp111, 1, 0830],
     [dmp111, 1, 1200},
     [dmp111, 1, 1530],
@@ -203,7 +203,7 @@ avail_day_time(dmp100, 6, 1900).
     [dmp111, 5, 1200},
     [dmp111, 5, 1530],
     [dmp111, 5, 1900],
-    
+
     [dmp310, 1, 0830],
     [dmp310, 1, 1200},
     [dmp310, 1, 1530],
@@ -250,3 +250,58 @@ avail_day_time(dmp100, 6, 1900).
 
 
 % prop(day, valid, [2,3,4,5,6,9,10,11,12,13,16,17,18]).
+
+student(s001).
+student(s002).
+student(s003).
+student(s004).
+student(s005).
+student(s006).
+student(s007).
+student(s008).
+student(s009).
+student(s010).
+student(s011).
+student(s012).
+student(s013).
+student(s014).
+student(s015).
+student(s016).
+
+prop(s001, takes, cs103).
+prop(s002, takes, cs110).
+prop(s003, takes, cs110).
+prop(s003, takes, cs121).
+prop(s004, takes, cs210).
+prop(s004, takes, cs121).
+prop(s005, takes, cs213).
+prop(s005, takes, cs221).
+prop(s006, takes, cs313).
+prop(s006, takes, cs304).
+prop(s006, takes, cs310).
+prop(s007, takes, cs415).
+prop(s007, takes, cs314).
+prop(s008, takes, cs320).
+prop(s008, takes, cs415).
+prop(s009, takes, cs421).
+prop(s009, takes, cs322).
+prop(s009, takes, cs304).
+prop(s010, takes, cs310).
+prop(s010, takes, cs311).
+prop(s011, takes, cs415).
+prop(s011, takes, cs311).
+prop(s012, takes, cs410).
+prop(s012, takes, cs304).
+prop(s013, takes, cs203).
+prop(s013, takes, cs210).
+prop(s014, takes, cs302).
+prop(s014, takes, cs415).
+prop(s014, takes, cs322).
+prop(s014, takes, cs312).
+prop(s014, takes, cs311).
+prop(s015, takes, cs422).
+prop(s015, takes, cs424).
+prop(s015, takes, cs312).
+prop(s016, takes, cs410).
+prop(s016, takes, cs213).
+prop(s016, takes, cs320).
