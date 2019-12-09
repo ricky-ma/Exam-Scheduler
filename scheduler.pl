@@ -101,3 +101,8 @@ schedule(Courses, Rooms, Result) :-
     get_RDT(Srooms, RDTs),
     myflatten(RDTs, CleanRDTs),
     schedule_courses_to_rooms(Scourses, CleanRDTs, Result).
+
+schedule_naive(Courses, Rooms, Result) :-
+    get_RDT(Rooms, RDTs),
+    myflatten(RDTs, CleanRDTs),
+    schedule_courses_to_rooms(Courses, CleanRDTs, Result).
